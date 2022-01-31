@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ProjectAgent007_WindowsForms
+namespace EyewearCompany
 {
     static class Program
     {

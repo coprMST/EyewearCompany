@@ -10,15 +10,15 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
 
-namespace ProjectAgent007_WindowsForms
+namespace EyewearCompany
 {
     public partial class Agents : Form
     {
         public string stringSort = "order by Agent.Title asc";
         public int myPage = 1;
         public int maxPages = 1;
-        public int[] IDs = new int[5];
-
+        public static string[] IDs = new string[5];
+        public static string EditID = string.Empty;
         public Agents()
         {
             InitializeComponent();
@@ -88,8 +88,9 @@ namespace ProjectAgent007_WindowsForms
                         (Controls["agentImage" + (i + 1).ToString()] as PictureBox).ImageLocation = string.IsNullOrEmpty((dataTable.Rows[i][0]).ToString()) ? "agents/picture.png" : dataTable.Rows[i][0].ToString().Remove(0, 1).Replace(@"\", "/");
                         (Controls["phone" + (i + 1).ToString()] as Label).Text = dataTable.Rows[i][3].ToString();
                         (Controls["sells" + (i + 1).ToString()] as Label).Text = dataTable.Rows[i][6].ToString() + " продаж за 10 лет";
-                        (Controls["percent" + (i + 1).ToString()] as Label).Text = dataTable.Rows[i][7].ToString() + "%";
-                        IDs[i] = Convert.ToInt32(dataTable.Rows[i][5]);
+                        (Controls["percent" + (i + 1).ToString()] as Label).Text = String.IsNullOrEmpty(dataTable.Rows[i][7].ToString()) ? "0%" : dataTable.Rows[i][7].ToString() + "%";
+
+                        IDs[i] = dataTable.Rows[i][5].ToString();
 
                         // Выделение цветом агентов, скидка которых 25%
                         (Controls["nameAgent" + (i + 1).ToString()] as Label).ForeColor = ((Controls["percent" + (i + 1).ToString()] as Label).Text == "25%") ? Color.LightSeaGreen : Color.Black;
@@ -134,7 +135,7 @@ namespace ProjectAgent007_WindowsForms
 
             switch (cbSender.SelectedIndex)
             {
-                case 1: stringSort = "order by Agent.Title asc"; Update(); break;
+                case 0: case 1: stringSort = "order by Agent.Title asc"; Update(); break;
                 case 2: stringSort = "order by Agent.Title desc"; Update(); break;
 
                 case 3: stringSort = "order by Discount desc"; Update(); break;
@@ -163,11 +164,6 @@ namespace ProjectAgent007_WindowsForms
             }
 
             UpdatePages();
-        }
-
-        private void GoDeleteAgent_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -284,12 +280,57 @@ namespace ProjectAgent007_WindowsForms
             if (presenceOfAgents)
             {
                 Update();
-                MessageBox.Show("Данные агентов были успешно удалены!", "Удаление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Данные агента(ов) были успешно удалены!", "Удаление", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Для удаление не были указаны агенты", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Для удаления не были указаны агенты.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void GoToAddNewAgent_Click(object sender, EventArgs e)
+        {
+            AddNewAgent addNewAgent = new AddNewAgent();
+            addNewAgent.Show();
+            this.Hide();
+        }
+
+        private void GoToEditAgent_Click(object sender, EventArgs e)
+        {
+            int count = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                if ((Controls["checkBox" + (i + 1).ToString()] as CheckBox).Checked)
+                {
+                    EditID = IDs[i];
+                    count++;
+                }
+            }
+
+            if (count == 1)
+            {
+                EditAgents editAgents = new EditAgents();
+                editAgents.Show();
+                this.Hide();
+            }
+            else if (count > 0)
+            {
+                MessageBox.Show("Редактировать можно только одного агента.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show("Для редактирования не был указан агент.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CloseApp()
+        {
+            Application.Exit();
+        }
+
+        private void Agents_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            CloseApp();
         }
     }
 }

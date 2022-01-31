@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1285794F-48E6-4FAC-8191-E9F56D309548}</ProjectGuid>
+    <ProjectGuid>{D08E5B5D-22C5-4CE1-B2D5-BECE2DFCD1B0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>EyewearCompanyDesktopApp</RootNamespace>
-    <AssemblyName>EyewearCompanyDesktopApp</AssemblyName>
+    <RootNamespace>EyewearCompany</RootNamespace>
+    <AssemblyName>EyewearCompany</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,9 +32,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>Глазки-save.ico</ApplicationIcon>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,16 +46,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddNewAgent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddNewAgent.Designer.cs">
+      <DependentUpon>AddNewAgent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Agents.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Agents.Designer.cs">
       <DependentUpon>Agents.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditAgents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditAgents.Designer.cs">
+      <DependentUpon>EditAgents.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddNewAgent.resx">
+      <DependentUpon>AddNewAgent.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Agents.resx">
       <DependentUpon>Agents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditAgents.resx">
+      <DependentUpon>EditAgents.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -83,9 +98,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Глазки-save.ico" />
+    <None Include="Resources\8d22c2259a378874cb5d146972cbac7f.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8d22c2259a378874cb5d146972cbac7f1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kavo-i-sho-mem-768x575.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
